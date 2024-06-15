@@ -38,9 +38,11 @@
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/16475d5f-f346-4ca3-978f-bf419c6adfa4)
 
 Скачиваем один и тот же файл в каждый рейд
+
 [root@zfs ~]# for i in {1..4}; do wget -P /otus$i https://gutenberg.org/cache/epub/2600/pg2600.converter.log; done
 
 Проверяем, что файл скачан
+
 [root@zfs ~]# ls -l /otus*
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/f8c84abd-7d90-4ad1-bacc-a88259dee987)
@@ -59,43 +61,53 @@
 - какая контрольная сумма используется.
 
 Скачиваем архив в домашний каталог и разархивируем его
+
 [root@zfs ~]# wget -O archive.tar.gz --no-check-certificate 'https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download'
+
 [root@zfs ~]# tar -xzvf archive.tar.gz
 
 Проверяем возможно ли импортировать данный каталог в пул
+
 [root@zfs ~]# zpool import -d zpoolexport/
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/32a278dc-6435-4407-8d86-d17d1e5c0786)
 
 Производим импорт данного пула в ОС
+
 [root@zfs ~]# zpool import -d zpoolexport/ otus
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/4b8136a9-15d8-4e0f-8ed6-d8464c5e6ed4)
 
 Смотрим все параметры файловой системы
+
 [root@zfs ~]# zfs get all otus
 
 Определяем размер хранилища
+
 [root@zfs ~]# zfs get available otus
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/bc793537-a8dd-4f18-b5aa-929ecc6af34d)
 
 Определяем тип pool
+
 [root@zfs ~]# zfs get readonly otus
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/c6a19045-334d-49c6-90c9-41f0ac0087c8)
 
 Определяем значение recordsize
+
 [root@zfs ~]# zfs get recordsize otus
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/47cceb06-d502-440b-8054-8b4300aa5992)
 
 Определеяем какое сжатие используется
+
 [root@zfs ~]# zfs get compression otus
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/e6803010-3c0d-4640-9bed-5e222c0fcaad)
 
 Определяем какая контрольная сумма используется
+
 [root@zfs ~]# zfs get checksum otus
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/ddd3ab7f-925e-4ee7-ac04-759f7d36b843)
@@ -106,9 +118,11 @@
 найти зашифрованное сообщение в файле secret_message.
 
 Скачиваем файл
+
 [root@zfs ~]# wget -O otus_task2.file --no-check-certificate https://drive.usercontent.google.com/download?id=1wgxjih8YZ-cqLqaZVa0lA3h3Y029c3oI&export=download
 
 Восстанавливаем файловую систему из снапшота
+
 [root@zfs ~]# zfs receive otus/test@today < otus_task2.file
 
 Далее, ищем в каталоге /otus/test файл с именем “secret_message” и смотрим содержимое этого файла:
