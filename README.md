@@ -2,25 +2,37 @@
 Определить какие алгоритмы сжатия поддерживает zfs (gzip, zle, lzjb, lz4);
 создать 4 файловых системы на каждой применить свой алгоритм сжатия;
 для сжатия использовать либо текстовый файл, либо группу файлов
+
 Смотрим список всех дисков с помощью команды lsblk
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/525fb7fb-2680-483e-a352-ba235c75fe3e)
 
 Создаем 4 рейда 1, в каждом из которых по 2 диска и смотрим о них информацию 
+
 [root@zfs ~]# zpool create otus1 mirror /dev/sdb /dev/sdc
+
 [root@zfs ~]# zpool create otus2 mirror /dev/sdd /dev/sde
+
 [root@zfs ~]# zpool create otus3 mirror /dev/sdf /dev/sdg
+
 [root@zfs ~]# zpool create otus4 mirror /dev/sdh /dev/sdi
+
 [root@zfs ~]# zpool list
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/915a0269-b0c8-4627-8af6-e42a83fa36f5)
 
 Используем разные алгоритмы сжатия для каждой файловой системы
+
 [root@zfs ~]# zfs set compression=lzjb otus1
+
 [root@zfs ~]# zfs set compression=lz4 otus2
+
 [root@zfs ~]# zfs set compression=gzip-9 otus3
+
 [root@zfs ~]# zfs set compression=zle otus4
+
 Проверяем методы сжатия
+
 [root@zfs ~]# zfs get all | grep compression
 
 ![image](https://github.com/DronZap/linux_ZFS/assets/145288949/16475d5f-f346-4ca3-978f-bf419c6adfa4)
